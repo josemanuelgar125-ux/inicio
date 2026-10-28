@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Inicio</title>
+<style>
+  :root {
+    --negro: #0b0b0b;
+    --negro2: #151515;
+    --naranja: #ff9000;
+    --naranja2: #ffb347;
+    --blanco: #ffffff;
+    --gris: #9a9a9a;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    min-height: 100vh;
+    font-family: "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    color: var(--blanco);
+    background: var(--negro);
+    overflow-x: hidden;
+    position: relative;
+  }
+
+  /* ---------- FONDO ---------- */
+  .fondo {
+    position: fixed;
+    inset: 0;
+    z-index: -2;
+    background:
+      radial-gradient(circle at 15% 20%, rgba(255,144,0,.28), transparent 45%),
+      radial-gradient(circle at 85% 80%, rgba(255,144,0,.22), transparent 50%),
+      radial-gradient(circle at 50% 110%, rgba(255,179,71,.18), transparent 55%),
+      linear-gradient(160deg, #050505 0%, #121212 50%, #070707 100%);
+  }
+  .fondo::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(255,144,0,.06) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255,144,0,.06) 1px, transparent 1px);
+    background-size: 60px 60px;
+    mask-image: radial-gradient(circle at center, black 20%, transparent 75%);
+    -webkit-mask-image: radial-gradient(circle at center, black 20%, transparent 75%);
+  }
+  .brillo {
+    position: fixed;
+    width: 420px; height: 420px;
+    border-radius: 50%;
+    filter: blur(110px);
+    z-index: -1;
+    opacity: .35;
+    background: var(--naranja);
+    animation: flotar 14s ease-in-out infinite alternate;
+  }
+  .brillo.a { top: -120px; left: -120px; }
+  .brillo.b { bottom: -150px; right: -120px; animation-delay: -6s; background: var(--naranja2); }
+  @keyframes flotar {
+    from { transform: translate(0,0) scale(1); }
+    to   { transform: translate(60px,40px) scale(1.2); }
+  }
+
+  /* ---------- CABECERA ---------- */
+  header {
+    padding: 28px 6vw;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .logo {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: clamp(2rem, 6vw, 3.4rem);
+    font-weight: 800;
+    letter-spacing: -1px;
+    text-decoration: none;
+    user-select: none;
+  }
+  .logo .txt { color: var(--blanco); }
+  .logo .caja {
+    background: var(--naranja);
+    color: var(--negro);
+    padding: 0 .35em;
+    border-radius: .22em;
+    transform: skewX(-6deg);
+    box-shadow: 0 0 25px rgba(255,144,0,.55);
+  }
+
+  /* ---------- CONTENIDO ---------- */
+  main {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 20px 6vw 80px;
+    text-align: center;
+  }
+  .subtitulo {
+    color: var(--gris);
+    font-size: 1.05rem;
+    margin-bottom: 50px;
+  }
+  .subtitulo b { color: var(--naranja); font-weight: 600; }
+
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 24px;
+  }
+
+  .tarjeta {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    min-height: 190px;
+    padding: 26px 24px;
+    text-align: left;
+    text-decoration: none;
+    color: var(--blanco);
+    background: linear-gradient(145deg, rgba(30,30,30,.85), rgba(12,12,12,.9));
+    border: 1px solid rgba(255,144,0,.25);
+    border-radius: 16px;
+    backdrop-filter: blur(6px);
+    overflow: hidden;
+    transition: transform .25s ease, border-color .25s ease, box-shadow .25s ease;
+  }
+  .tarjeta::before {
+    content: "";
+    position: absolute;
+    left: 0; top: 0;
+    width: 5px; height: 100%;
+    background: var(--naranja);
+    transition: width .25s ease;
+  }
+  .tarjeta:hover {
+    transform: translateY(-6px);
+    border-color: var(--naranja);
+    box-shadow: 0 12px 40px rgba(255,144,0,.28);
+  }
+  .tarjeta:hover::before { width: 100%; opacity: .12; }
+
+  .num {
+    font-size: .85rem;
+    font-weight: 700;
+    letter-spacing: 2px;
+    color: var(--naranja);
+  }
+  .tarjeta h2 {
+    font-size: 1.5rem;
+    margin: 10px 0 6px;
+    position: relative;
+  }
+  .tarjeta p {
+    color: var(--gris);
+    font-size: .92rem;
+    position: relative;
+  }
+  .ir {
+    margin-top: 18px;
+    font-weight: 700;
+    font-size: .9rem;
+    color: var(--naranja);
+    position: relative;
+    transition: letter-spacing .25s ease;
+  }
+  .tarjeta:hover .ir { letter-spacing: 1px; color: var(--naranja2); }
+
+  footer {
+    text-align: center;
+    padding: 20px;
+    color: #555;
+    font-size: .8rem;
+  }
+
+  @media (max-width: 500px) {
+    .subtitulo { margin-bottom: 30px; }
+  }
+
+  /* ---------- VERIFICACIÓN DE EDAD ---------- */
+  body.bloqueado { overflow: hidden; }
+
+  #edad {
+    position: fixed;
+    inset: 0;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 16px;
+    background: rgba(0,0,0,.92);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    overflow-y: auto;
+    transition: opacity .35s ease, visibility .35s ease;
+  }
+  #edad.oculto { opacity: 0; visibility: hidden; pointer-events: none; }
+
+  .edad-caja {
+    width: 100%;
+    max-width: 780px;
+    margin: auto;
+    padding: 70px 40px 36px;
+    text-align: center;
+    background: #000;
+    border: 1px solid #2b2b2b;
+    box-shadow: 0 0 80px rgba(255,144,0,.12);
+    animation: aparecer .5s ease both;
+  }
+  @keyframes aparecer {
+    from { opacity: 0; transform: translateY(18px) scale(.98); }
+    to   { opacity: 1; transform: none; }
+  }
+
+  .edad-caja .logo { font-size: clamp(2.4rem, 7vw, 3.2rem); margin-bottom: 38px; }
+
+  .edad-caja h1 {
+    font-size: clamp(1.6rem, 5vw, 2.6rem);
+    line-height: 1.2;
+    font-weight: 800;
+    margin-bottom: 26px;
+  }
+  .edad-caja .texto {
+    max-width: 600px;
+    margin: 0 auto 46px;
+    font-size: 1.05rem;
+    line-height: 1.45;
+    color: #d6d6d6;
+  }
+
+  .edad-botones {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 16px;
+    margin-bottom: 38px;
+  }
+  .btn-edad {
+    flex: 1 1 260px;
+    max-width: 360px;
+    padding: 22px 16px;
+    font: inherit;
+    font-size: 1.1rem;
+    font-weight: 700;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: filter .2s ease, transform .15s ease, background .2s ease;
+  }
+  .btn-edad:active { transform: scale(.98); }
+  .btn-si { background: var(--naranja); color: #000; }
+  .btn-si:hover { filter: brightness(1.12); box-shadow: 0 0 24px rgba(255,144,0,.45); }
+  .btn-no { background: #1d1d1d; color: #fff; }
+  .btn-no:hover { background: #2a2a2a; }
+
+  .edad-pie { color: #c9c9c9; font-size: 1rem; line-height: 1.4; margin-bottom: 26px; }
+  .edad-pie span { color: var(--naranja); }
+  .edad-copy { color: #8a8a8a; font-size: .82rem; }
+
+  @media (max-width: 500px) {
+    .edad-caja { padding: 44px 20px 28px; }
+    .edad-caja .texto { margin-bottom: 30px; }
+  }
+</style>
+</head>
+<body class="bloqueado">
+
+<!-- Verificación de edad -->
+<div id="edad" role="dialog" aria-modal="true" aria-labelledby="edad-titulo">
+  <div class="edad-caja">
+    <div class="logo">
+      <span class="txt">Inicio</span><span class="caja">Web</span>
+    </div>
+
+    <h1 id="edad-titulo">Este es un sitio web destinado a adultos</h1>
+
+    <p class="texto">
+      Este sitio web contiene material con restricciones de edad. Al entrar,
+      afirmas que tienes al menos 18 años o la mayoría de edad en la
+      jurisdicción desde la que accedes al sitio web.
+    </p>
+
+    <div class="edad-botones">
+      <button class="btn-edad btn-si" id="btn-si" type="button">Tengo 18 años o más - Entrar</button>
+      <button class="btn-edad btn-no" id="btn-no" type="button">Tengo menos de 18 años - Salir</button>
+    </div>
+
+    <p class="edad-pie">
+      Nuestra página de <span>control parental</span> explica cómo
+      puedes bloquear fácilmente el acceso a este sitio.
+    </p>
+
+    <p class="edad-copy">© Inicio Web, 2026</p>
+  </div>
+</div>
+
+<div class="fondo"></div>
+<div class="brillo a"></div>
+<div class="brillo b"></div>
+
+<header>
+  <a class="logo" href="#">
+    <span class="txt">Inicio</span><span class="caja">Web</span>
+  </a>
+</header>
+
+<main>
+  <p class="subtitulo">Elige un proyecto y entra <b>con un clic</b></p>
+
+  <div class="grid">
+
+    <a class="tarjeta" href="https://josemanuelgar125-ux.github.io/semafor/htmlSemantico.html" target="_blank" rel="noopener">
+      <div>
+        <span class="num">01</span>
+        <h2>Semáforo</h2>
+        <p>Página con HTML semántico.</p>
+      </div>
+      <span class="ir">Entrar →</span>
+    </a>
+
+    <a class="tarjeta" href="https://josemanuelgar125-ux.github.io/ordinador/index%20(2).html" target="_blank" rel="noopener">
+      <div>
+        <span class="num">02</span>
+        <h2>Ordenador</h2>
+        <p>Proyecto sobre ordenadores.</p>
+      </div>
+      <span class="ir">Entrar →</span>
+    </a>
+
+    <a class="tarjeta" href="https://josemanuelgar125-ux.github.io/cuina2/cocina2/index.html" target="_blank" rel="noopener">
+      <div>
+        <span class="num">03</span>
+        <h2>Cocina</h2>
+        <p>Web de cocina.</p>
+      </div>
+      <span class="ir">Entrar →</span>
+    </a>
+
+    <a class="tarjeta" href="https://josemanuelgar125-ux.github.io/web-prueba/index.html" target="_blank" rel="noopener">
+      <div>
+        <span class="num">04</span>
+        <h2>Web prueba</h2>
+        <p>Página de pruebas.</p>
+      </div>
+      <span class="ir">Entrar →</span>
+    </a>
+
+  </div>
+</main>
+
+<footer>© Mis proyectos · GitHub Pages</footer>
+
+<script>
+  (function () {
+    var capa = document.getElementById('edad');
+    var CLAVE = 'edadVerificada';
+
+    function entrar() {
+      try { sessionStorage.setItem(CLAVE, '1'); } catch (e) {}
+      capa.classList.add('oculto');
+      document.body.classList.remove('bloqueado');
+    }
+
+    var yaVerificado = false;
+    try { yaVerificado = sessionStorage.getItem(CLAVE) === '1'; } catch (e) {}
+    if (yaVerificado) { entrar(); }
+
+    document.getElementById('btn-si').addEventListener('click', entrar);
+    document.getElementById('btn-no').addEventListener('click', function () {
+      window.location.href = 'https://www.google.com';
+    });
+  })();
+</script>
+
+</body>
+</html>
