@@ -180,122 +180,9 @@
     .subtitulo { margin-bottom: 30px; }
   }
 
-  /* ---------- VERIFICACIÓN DE EDAD ---------- */
-  body.bloqueado { overflow: hidden; }
-
-  #edad {
-    position: fixed;
-    inset: 0;
-    z-index: 100;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 16px;
-    background: rgba(0,0,0,.92);
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
-    overflow-y: auto;
-    transition: opacity .35s ease, visibility .35s ease;
-  }
-  #edad.oculto { opacity: 0; visibility: hidden; pointer-events: none; }
-
-  .edad-caja {
-    width: 100%;
-    max-width: 780px;
-    margin: auto;
-    padding: 70px 40px 36px;
-    text-align: center;
-    background: #000;
-    border: 1px solid #2b2b2b;
-    box-shadow: 0 0 80px rgba(255,144,0,.12);
-    animation: aparecer .5s ease both;
-  }
-  @keyframes aparecer {
-    from { opacity: 0; transform: translateY(18px) scale(.98); }
-    to   { opacity: 1; transform: none; }
-  }
-
-  .edad-caja .logo { font-size: clamp(2.4rem, 7vw, 3.2rem); margin-bottom: 38px; }
-
-  .edad-caja h1 {
-    font-size: clamp(1.6rem, 5vw, 2.6rem);
-    line-height: 1.2;
-    font-weight: 800;
-    margin-bottom: 26px;
-  }
-  .edad-caja .texto {
-    max-width: 600px;
-    margin: 0 auto 46px;
-    font-size: 1.05rem;
-    line-height: 1.45;
-    color: #d6d6d6;
-  }
-
-  .edad-botones {
-    display: flex;
-    justify-content: center;
-    flex-wrap: wrap;
-    gap: 16px;
-    margin-bottom: 38px;
-  }
-  .btn-edad {
-    flex: 1 1 260px;
-    max-width: 360px;
-    padding: 22px 16px;
-    font: inherit;
-    font-size: 1.1rem;
-    font-weight: 700;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    transition: filter .2s ease, transform .15s ease, background .2s ease;
-  }
-  .btn-edad:active { transform: scale(.98); }
-  .btn-si { background: var(--naranja); color: #000; }
-  .btn-si:hover { filter: brightness(1.12); box-shadow: 0 0 24px rgba(255,144,0,.45); }
-  .btn-no { background: #1d1d1d; color: #fff; }
-  .btn-no:hover { background: #2a2a2a; }
-
-  .edad-pie { color: #c9c9c9; font-size: 1rem; line-height: 1.4; margin-bottom: 26px; }
-  .edad-pie span { color: var(--naranja); }
-  .edad-copy { color: #8a8a8a; font-size: .82rem; }
-
-  @media (max-width: 500px) {
-    .edad-caja { padding: 44px 20px 28px; }
-    .edad-caja .texto { margin-bottom: 30px; }
-  }
 </style>
 </head>
-<body class="bloqueado">
-
-<!-- Verificación de edad -->
-<div id="edad" role="dialog" aria-modal="true" aria-labelledby="edad-titulo">
-  <div class="edad-caja">
-    <div class="logo">
-      <span class="txt">Inicio</span><span class="caja">Web</span>
-    </div>
-
-    <h1 id="edad-titulo">Este es un sitio web destinado a adultos</h1>
-
-    <p class="texto">
-      Este sitio web contiene material con restricciones de edad. Al entrar,
-      afirmas que tienes al menos 18 años o la mayoría de edad en la
-      jurisdicción desde la que accedes al sitio web.
-    </p>
-
-    <div class="edad-botones">
-      <button class="btn-edad btn-si" id="btn-si" type="button">Tengo 18 años o más - Entrar</button>
-      <button class="btn-edad btn-no" id="btn-no" type="button">Tengo menos de 18 años - Salir</button>
-    </div>
-
-    <p class="edad-pie">
-      Nuestra página de <span>control parental</span> explica cómo
-      puedes bloquear fácilmente el acceso a este sitio.
-    </p>
-
-    <p class="edad-copy">© Inicio Web, 2026</p>
-  </div>
-</div>
+<body>
 
 <div class="fondo"></div>
 <div class="brillo a"></div>
@@ -352,28 +239,6 @@
 </main>
 
 <footer>© Mis proyectos · GitHub Pages</footer>
-
-<script>
-  (function () {
-    var capa = document.getElementById('edad');
-    var CLAVE = 'edadVerificada';
-
-    function entrar() {
-      try { sessionStorage.setItem(CLAVE, '1'); } catch (e) {}
-      capa.classList.add('oculto');
-      document.body.classList.remove('bloqueado');
-    }
-
-    var yaVerificado = false;
-    try { yaVerificado = sessionStorage.getItem(CLAVE) === '1'; } catch (e) {}
-    if (yaVerificado) { entrar(); }
-
-    document.getElementById('btn-si').addEventListener('click', entrar);
-    document.getElementById('btn-no').addEventListener('click', function () {
-      window.location.href = 'https://www.google.com';
-    });
-  })();
-</script>
 
 </body>
 </html>
